@@ -10,6 +10,7 @@ const historyNode = document.querySelector(".js-history");
 const sumNode = document.querySelector(".js-sum");
 const limitNode = document.querySelector(".js-limit");
 const statusNode = document.querySelector(".js-status");
+const resetNode = document.querySelector(".js-reset-button");
 
 const expenses = [];
 
@@ -102,3 +103,12 @@ function renderStatus(sum) {
     statusNode.classList.add(STATUS_OUT_OF_LIMIT_CLASSNAME); //прописали св-во цвета в файле css, но класс в html добавится к элементу через js
   }
 }
+
+// !Сброс истории расходов:
+resetNode.addEventListener("click", function () {
+  historyNode.innerText = "";
+  sumNode.innerText = 0;
+  statusNode.innerText = STATUS_IN_LIMIT;
+  statusNode.classList.remove("status_red");
+  expenses.length = 0;
+});

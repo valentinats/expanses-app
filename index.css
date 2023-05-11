@@ -70,6 +70,7 @@ input::-webkit-inner-spin-button {
 .data__wrapper {
   display: flex;
   gap: 238px;
+  margin-bottom: 70px;
 }
 
 .data__list {
@@ -96,4 +97,15 @@ ol {
 
 .status_red {
   color: red;
+}
+
+.reset__button {
+  width: 302px;
+  background: red;
+  font-family: "Inter";
+  font-size: 22px;
+  line-height: 39px;
+  color: #ffffff;
+  cursor: pointer;
+  border: none;
 }
