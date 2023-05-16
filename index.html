@@ -19,7 +19,7 @@
     <div class="container">
       <h1>Учет расходов</h1>
       <div class="expenses__wrapper">
-        <form class="expenses__inner" onsubmit="return false" ;>
+        <form class="expenses__inner" onsubmit="return false";>
           <input
             class="js-input expenses__input"
             type="number"
@@ -30,9 +30,47 @@
           <button class="js-button expenses__button">Добавить</button>
         </form>
       </div>
+      <div class="category">
+        <select class="category__list" id="categorySelect" name="mySelect">
+          <option hidden="" disabled="" selected="" value="Категория">Категория</option>
+          <option value="Транспорт"> Транспорт </option>
+          <option value="Кафе и рестораны"> Кафе и рестораны </option>
+          <option value="Здоровье"> Здоровье </option>
+          <option value="Развлечения"> Развлечения </option>
+        </select> 
+      </div>
       <div class="data__wrapper">
         <div class="data__list">
-          <p class="data__limit">Лимит: <span class="js-limit"></span> руб.</p>
+          <div class="limit">
+            <p class="data__limit">
+              Лимит: <span class="js-limit"></span>
+              <button class="js-btn limit__image">
+                <img src="limit-icon.png" style="width: 26px;">
+              </button>
+              руб.
+            </p>
+            <div class="js-popup popup">
+              <div class="js-popup__content popup__content">
+                <p class="popup__title">Новый лимит</p>
+                <div class="popup__close-btn js-popup__close-btn"></div>
+                <div class="limit__wrapper">
+                  <form class="expenses__inner" onsubmit="return false";>
+                    <input
+                      class="js-limit-input expenses__input"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      placeholder="0,00 руб".
+                      required
+                    />
+                    <button class="js-add-limit expenses__button">
+                      Задать лимит
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
           <p class="data__sum-expenses">
             Всего: <span class="js-sum"></span> руб.
           </p>
@@ -49,5 +87,6 @@
     </div>
 
     <script src="index.js"></script>
+    <script src="popup.js"></script>
   </body>
 </html>
