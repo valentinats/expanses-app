@@ -17,8 +17,9 @@ const addLimitNode = document.querySelector(".js-add-limit");
 const statusNode = document.querySelector(".js-status");
 const resetNode = document.querySelector(".js-reset-button");
 
-const expenses = []; // объявление основной переменной, при запуске содержит в себе пустой массив, который пополняется по нажатию на "добавить". 
+const expenses = []; // объявление основной переменной, при запуске содержит в себе пустой массив, который пополняется по нажатию на "добавить".
 const categories = [];
+let sum = 0;
 
 init(expenses, categories);
 
@@ -31,13 +32,13 @@ buttonNode.addEventListener("click", function () {
     return;
   }
 
-//пока не выбрана категория, функция не будет работать - кнопка "добавить" не активна. 
+  //пока не выбрана категория, функция не будет работать - кнопка "добавить" не активна.
   if (category === "Категория") {
     return;
   }
 
   //из полученных переменных собираем объект newExpense, состоящий из 2-х полей: amount и category.
-  const newExpense = { amount: expense, category: category};
+  const newExpense = { amount: expense, category: category };
   console.log(newExpense);
 
   trackExpense(expense, category); // если расход есть, отслеживаем его.
@@ -69,7 +70,7 @@ function getExpenseFromUser() {
   return expense;
 }
 
-//возвращаем выбранную пользователем категорию. 
+//возвращаем выбранную пользователем категорию.
 function getCategoryFromUser() {
   const category = categorySelect.value;
   return category;
@@ -78,13 +79,12 @@ function getCategoryFromUser() {
 //Стрелочная функция. Сброс поля ввода после нажатия на кнопку "добавить".
 const clearInput = () => {
   inputNode.value = "";
-}
+};
 
 // !Считаем общую сумму расходов:
 function calculateExpenses(expenses) {
-  let sum = 0;
-
-  expenses.forEach((element) => { //пробегаем по массиву объектов expense, берем из каждого поле amount и прибавляем к переменной sum .
+  expenses.forEach((element) => {
+    //пробегаем по массиву объектов expense, берем из каждого поле amount и прибавляем к переменной sum .
     // список расходов.
     sum += element;
   });
@@ -121,25 +121,18 @@ function renderSum(sum) {
 function renderStatus(sum) {
   if (sum <= LIMIT) {
     statusNode.innerText = STATUS_IN_LIMIT;
+    statusNode.classList.toggle;
+    statusNode.className = "status";
   } else {
-    statusNode.innerText = `${STATUS_OUT_OF_LIMIT} (${
-      LIMIT - sum
-    } ${CURRENCY})`;
-    statusNode.classList.add(STATUS_OUT_OF_LIMIT_CLASSNAME); //прописали св-во цвета в файле css, но класс в html добавится к элементу через js
+    statusNode.innerText = `${STATUS_OUT_OF_LIMIT} 
+    (${LIMIT - sum} ${CURRENCY})`;
+    statusNode.classList.add(STATUS_OUT_OF_LIMIT_CLASSNAME);
+    //прописали св-во цвета в файле css, но класс в html добавится к элементу через js
   }
 }
 
-// !Сброс истории расходов:
-resetNode.addEventListener("click", function () {
-  historyNode.innerText = "";
-  sumNode.innerText = 0;
-  statusNode.innerText = STATUS_IN_LIMIT;
-  statusNode.classList.remove("status_red");
-  expenses.length = 0;
-});
-
 // ! Добавление нового лимита:
-addLimitNode.addEventListener("click", function () {
+function changeLimitHandler() {
   const newLimit = getNewLimitFromUser();
 
   //!операнд. Оператор «логическое НЕ» превращает true в false и наоборот.
@@ -154,7 +147,7 @@ addLimitNode.addEventListener("click", function () {
 
   renderNewLimit(newLimit);
   renderStatus(sum);
-});
+}
 
 function trackNewLimit(newLimit) {
   LIMIT = newLimit;
@@ -162,7 +155,7 @@ function trackNewLimit(newLimit) {
 
 function getNewLimitFromUser() {
   if (!limitInputNode.value) {
-    return null;
+    return;
   }
 
   const newLimit = parseInt(limitInputNode.value); // parseInt - в консоли преобразует строку в число. Также округляет его до целого без знаков после запятой.
@@ -179,3 +172,16 @@ function clearLimitInput() {
 function renderNewLimit() {
   limitNode.innerText = LIMIT;
 }
+
+const newLocal = "LIMIT";
+
+// !Сброс истории расходов:
+resetNode.addEventListener("click", function () {
+  historyNode.innerText = "";
+  sumNode.innerText = 0;
+  statusNode.innerText = STATUS_IN_LIMIT;
+  statusNode.classList.remove("status_red");
+  expenses.length = 0;
+});
+
+addLimitNode.addEventListener("click", changeLimitHandler);
